@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://angularjs.dev/',
+	'url' => 'http://laravel-angularjs-basic.dev/',
 
 	/*
 	|--------------------------------------------------------------------------
