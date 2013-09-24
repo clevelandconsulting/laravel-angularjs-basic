@@ -1,5 +1,7 @@
 <?php
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -19,12 +21,28 @@ Route::get('/expiry',function() {
 });
 
 /* API Routes */
-Route::group(array('prefix'=>'api/v1'), function() {
-	Route::post('auth/login', "LoginController@authLogin");
-	Route::get('auth/logout', "LoginController@authLogout");
+Route::post('api/v1/auth/login', "LoginController@authLogin");
+Route::get('api/v1/auth/logout', "LoginController@authLogout");
+
+
+
+
+
+
+Route::group(array('prefix'=>'api/v1', 'before'=>'auth'), function() {
+
+
+	Route::group(array('prefix'=>'basecamp', 'before'=>'auth'), function() {
+		Route::get('uri','v1\BasecampController@getBasecampUri');
+		Route::get('projects/update', 'v1\BasecampController@updateAllProjects');
+		Route::get('companies', 'v1\BasecampController@getAllCompanies');
+		Route::get('persons/{companyId}/update', 'v1\BasecampController@updateAllPeople');
+		
+	});
+
 	Route::get('user', function() {
 		return Response::json(Auth::user());
-	})->before('auth');
+	});
 	Route::put('user', function() {
 		
 		Auth::user()->first_name = Input::json('first_name');
@@ -41,7 +59,12 @@ Route::group(array('prefix'=>'api/v1'), function() {
 		else {
 			return Response::json(array('flash'=>'Could not update the user.'), 500);
 		}
-	})->before('auth');
+	});
+	
+	Route::resource('project', 'v1\ProjectController');
+	Route::resource('time', 'v1\TimeController');
+	Route::resource('companies', 'v1\CompaniesController');
+	
 });
 
 Route::group(array('prefix'=>'basic'), function() {
@@ -54,3 +77,4 @@ Route::group(array('prefix'=>'basic'), function() {
 	Route::get('profile', array('as'=>'profile', "uses"=>"ProfileController@showProfile"))->before('auth');
 	Route::put('updateuser', array('as'=>'updateuser', 'uses'=>'ProfileController@updateProfile'))->before('auth');
 });
+

@@ -1,6 +1,6 @@
 //service to provide the navigation paths
 angular.module("myApp").factory("NavigationService", function($location,AuthenticationService) {
-	var LoggedInPaths = [{ name: 'Profile', url: '/profile'}];
+	var LoggedInPaths = [{ name: 'Profile', url: '/profile'}, { name: 'Projects', url: '/projects'}];
 	var GuestPaths = [{ name: 'Login', url: '/login'} ];
 	
 	var obj = {

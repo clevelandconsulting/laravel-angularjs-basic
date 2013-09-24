@@ -47,7 +47,14 @@ class LoginController extends BaseController {
 		);
 		
 		if ( Auth::attempt($user)) {
-			return Response::json(array('flash'=>'You made it!', $user),200);
+			$u = Auth::user();
+			$obj = array(
+				'username'=> $u->username,
+				'email'=> $u->email,
+				'first_name'=>$u->first_name,
+				'last_name'=>$u->last_name
+			);
+			return Response::json(array('flash'=>'You made it!', 'user'=>$obj),200);
 		}
 		
 		return Response::json(array('flash'=>'Your username/password combination was incorrect!'), 401);

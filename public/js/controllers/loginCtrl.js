@@ -23,7 +23,6 @@ angular.module("myApp").controller('LoginController', function($scope, $location
 		  var r = AuthenticationService.login(cred);
 	  
 		  r.success(function(data){
-		  	debugger;
 		  	$scope.flashHeader = 'Yeah!';
 			$location.path('');
 		  });

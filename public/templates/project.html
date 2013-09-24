@@ -1,0 +1,9 @@
+<h1>{{myProject.company.name}}</h1>
+<h2>{{myProject.name}}</h2>
+<a href="{{basecampProjectUrl}}" target=_blank>Basecamp</a>
+<h3>Users</h3>
+<ul>
+	<li data-ng-repeat='user in myProject.users'>{{user.first_name}} {{user.last_name}}</li>
+</ul>
+
+<!--<pre><code>{{ jsonify(myProject) }}</code></pre>-->

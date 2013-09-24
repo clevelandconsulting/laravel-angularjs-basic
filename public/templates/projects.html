@@ -1,0 +1,13 @@
+
+  <h1>Projects by Company for {{ user.first_name }} {{ user.last_name }}</h1>
+  <div flash-alert active-class="in active" class="alert alert-dismissable fade">
+    <strong class="alert-heading">{{flashHeader}}</strong>
+    <span class="alert-message">{{flash.message}}</span>
+  </div>
+  <div class="container">
+	<div class="row">
+		<div data-ng-repeat='(name,cProjects) in myProjectGroups | orderBy:name'>
+		  <company name="{{ name }}" projects="cProjects"></company>
+		</div>
+	</div>
+</div>

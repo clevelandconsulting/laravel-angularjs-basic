@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://laravel-angularjs-basic.dev/',
+	'url' => 'http://time-clevelandconsulting.dev/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return array(
 	|
 	*/
 
-	'key' => 'YourSecretKey!!!',
+	'key' => '8JGap18ZxivLsaXpyKv1a2djFIbfZ7Ey',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -113,7 +113,8 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-'Way\Generators\GeneratorsServiceProvider',
+		'Way\Generators\GeneratorsServiceProvider',
+		'Clevelandconsulting\Basecamp\BasecampServiceProvider',
 
 	),
 

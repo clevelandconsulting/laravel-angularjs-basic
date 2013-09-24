@@ -14,7 +14,7 @@ class UserTableSeeder extends Seeder {
 		);
 
 		// Uncomment the below to run the seeder
-		DB::table('users')->insert($user);
+		//DB::table('users')->insert($user);
 	}
 
 }

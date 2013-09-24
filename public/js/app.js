@@ -1,4 +1,6 @@
-var app = angular.module("myApp",['angular-flash.service', 'angular-flash.flash-alert-directive']).config(function($routeProvider, $locationProvider, flashProvider) {
+var app = angular.module("myApp", ['angular-flash.service', 'angular-flash.flash-alert-directive' ]);
+	
+app.config(function($routeProvider, $locationProvider, flashProvider) {
 
  
   flashProvider.errorClassnames.push('alert-danger'); 
@@ -19,12 +21,38 @@ var app = angular.module("myApp",['angular-flash.service', 'angular-flash.flash-
     controller: 'ProfileController',
     resolve: {
 	    "user": function($http, $location) {
-	    	debugger;
 	    	if ( $location.path() == '/profile') return $http.get('/api/v1/user');
 	    	return null;
 	    }
     }
   });
+  
+  $routeProvider.when('/projects', {
+	 templateUrl: 'templates/projects.html',
+	 controller: 'ProjectsController',
+	 resolve: {
+		 "projects": function($http, $location) {
+			 if ( $location.path() == '/projects') {
+			 	return $http.get('/api/v1/project');
+			 }
+			 return null;
+		 }
+	 } 
+  });
+  
+  
+   $routeProvider.when('/projects/:id', {
+	 templateUrl: 'templates/project.html',
+	 controller: 'ProjectController',
+	 resolve: {
+		 "project": function($http,$route) {
+			 return $http.get('/api/v1/project/'+$route.current.params.id);
+			 //return null;
+		 }
+	 } 
+  });
+ 
+ 
   
   $routeProvider.when('/404', {
 	  templateUrl: 'templates/404.html',
@@ -48,14 +76,13 @@ angular.module("myApp").config(function($httpProvider) {
 		};
 		
 		var error = function(response) {
-			if(response.status === 401) {
-				//debugger;
+			if(response.status === 401 && $location.path() != '/login') {
 				//indicates the session has expired
 				SessionService.unset('authenticated');
 				$location.path('/login');
-				flash.clean();
+				//flash.clean();
 				flash.error = response.data.flash;
-				debugger;
+				//debugger;
 				return $q.reject(response);
 				
 			} else {
@@ -77,7 +104,7 @@ angular.module("myApp").run(function($rootScope,$location,AuthenticationService,
 	var routesWithoutAuth = ['/login', '/404', '/'];
 	
 	// Determine if the user is authenticated to access parts of the system
-	debugger;
+	//debugger;
 	
 	$rootScope.$on('$routeChangeStart', function(event, next, current) {
 		if(!_(routesWithoutAuth).contains($location.path()) && !AuthenticationService.isLoggedIn()) {

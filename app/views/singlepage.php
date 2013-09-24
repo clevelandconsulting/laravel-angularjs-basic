@@ -5,6 +5,8 @@
 	 <title>SingePage Version</title>
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<!--<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/simplex/bootstrap.min.css" rel="stylesheet">-->
+	<script type='text/javascript' src='js/vendor/underscore-min.js'></script>
+	<script type='text/javascript' src='js/vendor/angular.min.js'></script>
 	
 </head>
 <body>
@@ -36,10 +38,10 @@
 	<div style="margin-top: 61px" class="container" data-ng-view>
 
     </div><!-- end container -->   
-    <script type='text/javascript' src='js/vendor/underscore-min.js'></script>
-	<script type='text/javascript' src='js/vendor/angular.min.js'></script>
-	<script type='text/javascript' src='js/vendor/angular-flash.min.js'></script>
+    <script type='text/javascript' src='js/vendor/angular-flash.min.js'></script>
+	<script type='text/javascript' src='js/vendor/angular-route.min.js'></script>
 	<script type='text/javascript' src='js/app.js'></script>
+	<script type='text/javascript' src='js/directives/projectDirective.js'></script>
 	<script type='text/javascript' src='js/services/sessionService.js'></script>
 	<script type='text/javascript' src='js/services/authenticationService.js'></script>
 	<script type='text/javascript' src='js/services/navigationService.js'></script>
@@ -47,5 +49,6 @@
 	<script type='text/javascript' src='js/controllers/homeCtrl.js'></script>
 	<script type='text/javascript' src='js/controllers/loginCtrl.js'></script>
 	<script type='text/javascript' src='js/controllers/profileCtrl.js'></script>
+	<script type='text/javascript' src='js/controllers/projectCtrl.js'></script>
 </body>
 </html>

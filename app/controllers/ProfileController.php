@@ -26,6 +26,7 @@ class ProfileController extends BaseController {
 		Auth::user()->first_name = Input::get('firstName');
 		Auth::user()->last_name = Input::get('lastName');
 		Auth::user()->email = Input::get('email');
+		//Auth::user()->
 		
 		Auth::user()->save();
 		
