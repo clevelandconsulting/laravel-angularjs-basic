@@ -14,4 +14,9 @@ class Project extends Eloquent {
 	{
 		return $this->belongsTo('Company');
 	}
+	
+	public function times()
+	{
+		return $this->hasMany('Time')->with('user');
+	}
 }

@@ -20,8 +20,8 @@ app.config(function($routeProvider, $locationProvider, flashProvider) {
     templateUrl: 'templates/profile.html',
     controller: 'ProfileController',
     resolve: {
-	    "user": function($http, $location) {
-	    	if ( $location.path() == '/profile') return $http.get('/api/v1/user');
+	    "user": function($location, ApiService) {
+	    	if ( $location.path() == '/profile') return ApiService.user();
 	    	return null;
 	    }
     }
@@ -31,9 +31,9 @@ app.config(function($routeProvider, $locationProvider, flashProvider) {
 	 templateUrl: 'templates/projects.html',
 	 controller: 'ProjectsController',
 	 resolve: {
-		 "projects": function($http, $location) {
+		 "projects": function($location, ApiService) {
 			 if ( $location.path() == '/projects') {
-			 	return $http.get('/api/v1/project');
+			 	return ApiService.projects();
 			 }
 			 return null;
 		 }
@@ -45,9 +45,8 @@ app.config(function($routeProvider, $locationProvider, flashProvider) {
 	 templateUrl: 'templates/project.html',
 	 controller: 'ProjectController',
 	 resolve: {
-		 "project": function($http,$route) {
-			 return $http.get('/api/v1/project/'+$route.current.params.id);
-			 //return null;
+		 "project": function($route,ApiService) {
+			 return ApiService.projects($route.current.params.id);
 		 }
 	 } 
   });

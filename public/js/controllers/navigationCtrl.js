@@ -4,9 +4,11 @@ angular.module("myApp").controller("NavigationController", function($scope,$loca
 	$scope.loggedIn = function() {
 		return AuthenticationService.isLoggedIn();
 	}
+	
 	$scope.logout = function() {
 	  AuthenticationService.logout().success( function() {
 	  	$location.path('/login');
 	  });
-  }
+    }
+    
 });

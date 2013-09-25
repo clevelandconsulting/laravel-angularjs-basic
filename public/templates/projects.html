@@ -1,13 +1,88 @@
 
-  <h1>Projects by Company for {{ user.first_name }} {{ user.last_name }}</h1>
-  <div flash-alert active-class="in active" class="alert alert-dismissable fade">
-    <strong class="alert-heading">{{flashHeader}}</strong>
-    <span class="alert-message">{{flash.message}}</span>
-  </div>
   <div class="container">
-	<div class="row">
-		<div data-ng-repeat='(name,cProjects) in myProjectGroups | orderBy:name'>
-		  <company name="{{ name }}" projects="cProjects"></company>
+  	<div class="col-md-4">
+		<div class="row">
+			<div class="well projects">
+			<ul class='nav' role='complementary'>
+			  	<company data-ng-repeat='(name,cProjects) in myProjectGroups | orderBy:name' name="{{ name }}" projects="cProjects" select='loadProject(id)' cname='{{ "text-muted" }}'></company>
+			</ul>
+			</div>
+			<!--
+			<div data-ng-repeat='(name,cProjects) in myProjectGroups | orderBy:name'>
+			  <company name="{{ name }}" projects="cProjects" select='loadProject(id)'></company>
+			</div>
+			-->
 		</div>
-	</div>
+  	</div>
+  	<div class="col-md-8">
+  		<div data-ng-switch='hasProject(myProject)'>
+	  		<div data-ng-switch-when='true'>
+		  		<h1>{{myProject.name}} ({{myProject.company.name}})<small>&nbsp;<a href="{{basecampProjectUrl()}}" target=_blank>Basecamp Link</a></small></h1>
+		  		<div flash-alert active-class="in active" class="alert alert-dismissable fade">
+				    <strong class="alert-heading">{{flashHeader}}</strong>
+				    <span class="alert-message">{{flash.message}}</span>
+				  </div>
+		  		
+				
+				<bspanel title="CCI Users" pclass="panel-info">
+					<table class='table table-bordered table-striped'>
+						<tbody>
+							<tr data-ng-repeat='user in myProject.users'>
+								<td>{{user.first_name}} {{user.last_name}}</td>
+							</tr>
+						</tbody>
+					</table>
+				<!--
+				<ul>
+					<li data-ng-repeat='user in myProject.users'>{{user.first_name}} {{user.last_name}}</li>
+				</ul>
+				-->
+				</bspanel>
+				<bspanel title="Time" pclass="panel-info">
+					<table class='table table-bordered table-striped'>
+						<thead>
+							<tr><th>Hours</th><th>Date</th><th>User</th><th>Comment</th></tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat='time in myProject.times'>
+								<td>{{time.hrs}}</td>
+								<td>{{displayDate(time.date)}}</td>
+								<td>{{time.user.first_name + " " + time.user.last_name }}</td>
+								<td>{{time.comment}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<bspanel title='Add Hours' pclass='panel-default'>
+					
+						<form class='form-inline' role='form'>
+							<div class='form-group col-lg-3'>
+								<label for='date'>Date</label>
+								<input class='form-control input-sm' type='date' id='date' name='date' data-ng-model='newTime.date' required>
+							</div>
+							<div class='form-group col-lg-2'>
+								<label for='hours'>Hours</label>
+								<input class='form-control input-sm' type='number' id='hours' name='hours' data-ng-model='newTime.hrs' placeholder="Hours" required>
+							</div>
+							<div class='form-group col-lg-5'>
+								<label for='comment'>Comment</label>
+								<input class='form-control input-sm' type='text' id='comment' name='comment' data-ng-model='newTime.comment' placeholder='Comment'>
+							</div>
+							<div class='form-group col-lg-2'>
+								<button class='form-control btn btn-primary' data-ng-click='addHours(newTime,myProject)'>Add</button>
+							</div>
+						</form>
+					</bspanel>
+				</bspanel>
+	  		</div>
+	  		<div data-ng-switch-when='false'>
+	  			<h1>Select Project!</h1>
+	  			<div flash-alert active-class="in active" class="alert alert-dismissable fade">
+				    <strong class="alert-heading">{{flashHeader}}</strong>
+				    <span class="alert-message">{{flash.message}}</span>
+				</div>
+	  			<p>Select a company and then a project to view it here.</p>
+	  		</div>
+  		</div>
+  		
+  	</div>
 </div>

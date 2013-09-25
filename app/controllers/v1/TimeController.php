@@ -6,6 +6,10 @@ namespace v1;
 use BaseController;
 use Time;
 use View;
+use User;
+use Input;
+use Auth;
+use Response;
 
 class TimeController extends BaseController {
 
@@ -16,9 +20,11 @@ class TimeController extends BaseController {
 	 */
 	public function index()
 	{
-	
-		return Time::all();
-        //return View::make('time.index');
+		$user = Auth::user();
+		
+		$times = $user->times;
+				
+		return $times;
 	}
 
 	/**
@@ -38,7 +44,7 @@ class TimeController extends BaseController {
 	 */
 	public function store()
 	{
-		//
+		return $this->makeTime(Input::all());
 	}
 
 	/**
@@ -72,7 +78,10 @@ class TimeController extends BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$input = Input::all();
+		$input['id'] = $id;
+		
+		return $this->makeTime($input);
 	}
 
 	/**
@@ -84,6 +93,54 @@ class TimeController extends BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+	
+	protected function makeTime($input) {
+		if ( 
+			( isset($input['user']) || isset ($input['user_id']) ) && 
+			isset($input['project_id']) && 
+			isset($input['hrs']) && 
+			isset($input['date'])
+		) {
+		
+			if ( !isset($input['user_id']) ) {
+				$username = $input['user']['username'];
+				$user = User::where('username','=',$username)->get();
+				
+				if($user->count() > 0 ) {
+					$user_id = $user->first()->id;
+				}
+				else {
+					return Response::json(array('flash'=>'Could not find the user ' + $username + ' to add time to.'), 500);
+				}
+			}
+			else {
+				$user_id = $input['user_id'];
+			}
+			
+			if ( isset ($input['id']) ) {
+				$t = Time::find($input['id']);
+				
+				if ( !$t ) return Response::json(array('flash'=>'Could not find time record to update.'), 500);
+			}
+			else {
+				$t = new Time();
+			}
+			
+			$t->user_id = $user_id;
+			$t->project_id = $input['project_id'];
+			$t->hrs = $input['hrs'];
+			$t->comment = isset($input['comment']) ? $input['comment'] : '';
+			$t->date = $input['date'];
+			
+			$t->save();
+			
+			return Response::json(array('flash'=>'Added Time!', 'time'=>$t));
+			
+		}
+		else {
+			return Response::json(array('flash'=>'Missing information. Could not add time.'), 500);
+		}
 	}
 
 }

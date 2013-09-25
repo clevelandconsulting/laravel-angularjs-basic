@@ -1,0 +1,27 @@
+.projects .nav li a:hover {
+	color: #464646;
+}
+
+.projects .nav li.active a {
+	background-color: #a5a5a5;
+	color: white;
+}
+
+.projects .nav li.active {
+	border: #a5a5a5 solid 1px;
+}
+
+.projects .nav .nav li {
+	margin-left: 15px;
+}
+
+.projects .nav .nav li a {
+	background-color: #f5f5f5;
+	color: #535353;
+	font-size: 85%;
+}
+
+.projects .nav .nav li a:hover {
+	background-color: #eaeaea;
+	color: #131313;
+}

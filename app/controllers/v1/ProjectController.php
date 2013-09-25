@@ -61,6 +61,7 @@ class ProjectController extends BaseController {
 		$p = Project::find($id);
 		$p->load('company');
 		$p->load('users');
+		$p->load('times');
 		return $p;
         //return View::make('project.show');
 	}

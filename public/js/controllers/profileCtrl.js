@@ -1,4 +1,4 @@
-angular.module("myApp").controller('ProfileController', function($scope, $location, $http, flash, user) {
+angular.module("myApp").controller('ProfileController', function($scope, $location, ApiService, flash, user) {
   $scope.title = "Login";
   $scope.user = user.data;
   
@@ -20,16 +20,13 @@ angular.module("myApp").controller('ProfileController', function($scope, $locati
   	  
   	  if ( ( user.email !== '' && user.email !== undefined ) ) {
 
-		  var r = $http.put('api/v1/user',user);
+		  var r = ApiService.updateUser(user);
 	  
 		  r.success(function(data){
 		  	$scope.flashHeader = 'Yeah!';
-		  	flash.success = data.flash;
-			//$location.path('/home');
 		  });
 		  r.error(function(data) {
 		  	$scope.flashHeader = 'Doh!';
-		  	flash.error = data.flash;
 		  });
 		  return r;
 		  

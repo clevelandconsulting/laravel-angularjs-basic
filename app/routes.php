@@ -40,26 +40,8 @@ Route::group(array('prefix'=>'api/v1', 'before'=>'auth'), function() {
 		
 	});
 
-	Route::get('user', function() {
-		return Response::json(Auth::user());
-	});
-	Route::put('user', function() {
-		
-		Auth::user()->first_name = Input::json('first_name');
-		Auth::user()->last_name = Input::json('last_name');
-		Auth::user()->email = Input::json('email');
-		
-		$result = Auth::user()->save();
-		
-		//$result = false;
-		
-		if ( $result ) {
-			return Response::json(array('flash'=>'User Updated!', 'result'=>$result), 200);
-		}
-		else {
-			return Response::json(array('flash'=>'Could not update the user.'), 500);
-		}
-	});
+	Route::get('user', 'v1\UserController@index');
+	Route::put('user', 'v1\UserController@store');
 	
 	Route::resource('project', 'v1\ProjectController');
 	Route::resource('time', 'v1\TimeController');
